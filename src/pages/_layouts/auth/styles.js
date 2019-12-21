@@ -14,6 +14,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: auto;
+  padding: 30px;
 `;
 
 export const Content = styled.div`
@@ -63,6 +65,18 @@ export const Content = styled.div`
       &:focus {
         border: 1px solid #eee;
       }
+
+      &:hover {
+        background: ${darken(0.1, '#fff')};
+        transform: translateY(-1px);
+        transition: all 0.11s;
+      }
+    }
+
+    span {
+      color: #fff;
+      align-self: flex-end;
+      margin: 0 0 10px;
     }
 
     button {
@@ -77,7 +91,7 @@ export const Content = styled.div`
 
       &:hover {
         background: ${darken(0.05, '#eee')};
-        transform: translateY(-2px);
+        transform: translateY(-1px);
         transition: all 0.11s;
       }
     }

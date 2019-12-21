@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
@@ -10,14 +10,15 @@ import logo from '../../assets/images/logo.svg';
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('Insira um email válido')
-    .required('Digite um email'),
+    .required('Não esqueça do seu email!'),
   password: Yup.string()
     .min(6, 'Senha deve ter no mínimo 6 digitos')
-    .required('Digite sua senha'),
+    .required('A senha não foi digitada :('),
 });
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));
@@ -32,7 +33,7 @@ export default function SignIn() {
         <Input name="email" type="email" placeholder="Digite seu email" />
         <strong>SENHA </strong>
         <Input name="password" type="password" placeholder="Digite sua senha" />
-        <button type="submit">Acessar</button>
+        <button type="submit">{loading ? 'Carregando...' : 'Acessar'}</button>
       </Form>
     </>
   );
