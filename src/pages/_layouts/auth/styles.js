@@ -27,10 +27,10 @@ export const Content = styled.div`
     rgba(238, 77, 99, 1) 0%,
     rgba(247, 155, 167, 1) 100%
   );
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 30px;
-  border: 1px solid #eee;
-
+  /*border: 1px solid #eee;
+    */
   img {
     text-align: center;
   }

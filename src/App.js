@@ -13,10 +13,12 @@ import GlobalStyle from './styles/global';
 
 function App() {
   return (
-    <Router history={history}>
-      <Routes />
-      <GlobalStyle />
-    </Router>
+    <Provider store={store}>
+      <Router history={history}>
+        <Routes />
+        <GlobalStyle />
+      </Router>
+    </Provider>
   );
 }
 
