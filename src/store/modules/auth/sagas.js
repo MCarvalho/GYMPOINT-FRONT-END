@@ -21,7 +21,7 @@ export function* signIn({ payload }) {
     yield put(signInSuccess(token, user));
 
     toast.success('Seja bem vindo!!!');
-    history.push('/students');
+    history.replace('/students');
   } catch (err) {
     toast.error('Login não efetuado :( verifique seus dados');
     yield put(signInFailure());
