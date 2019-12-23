@@ -3,7 +3,7 @@ import { parseISO, formatDistanceStrict } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
-import { Container } from './styles';
+import { Container, Footer } from './styles';
 
 import RegisterStudent from './RegisterStudent';
 import EditStudent from './EditStudent';
@@ -71,14 +71,13 @@ export default function Students() {
         </div>
       </header>
 
-      <footer>
+      <Footer>
         <InfoTable>
           <thead>
             <tr>
               <th>NOME</th>
               <th>EMAIL</th>
               <th>IDADE</th>
-              <th>OPTIONS</th>
             </tr>
           </thead>
           <tbody>
@@ -102,7 +101,7 @@ export default function Students() {
             ))}
           </tbody>
         </InfoTable>
-      </footer>
+      </Footer>
     </Container>
   );
 }

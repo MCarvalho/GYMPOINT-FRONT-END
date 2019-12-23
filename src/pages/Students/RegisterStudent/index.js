@@ -53,6 +53,7 @@ export default function RegisterStudent() {
         <MdPersonAdd size={22} />
         CADASTRAR
       </ButtonRegister>
+
       <FloatForm visible={visible}>
         <Content visible={visible}>
           <Form schema={schema} onSubmit={handleSubmit}>

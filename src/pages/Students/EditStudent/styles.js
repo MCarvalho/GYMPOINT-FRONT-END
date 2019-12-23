@@ -3,6 +3,10 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   position: relative;
+
+  strong {
+    align-self: flex-start;
+  }
 `;
 
 export const EditButton = styled.div`

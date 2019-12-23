@@ -1,45 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { MdQuestionAnswer } from 'react-icons/md';
 
-import { Container } from './styles';
+import { Container, Footer } from './styles';
 
 import InfoTable from '~/components/InfoTable';
 
+import api from '~/services/api';
+
 export default function HelpOders() {
+  const [helpOders, setHelpOders] = useState([]);
+
+  useEffect(() => {
+    async function loadingHelpOders() {
+      const response = await api.get('help-oders');
+      console.tron.log(response.data);
+      setHelpOders(response.data);
+    }
+
+    loadingHelpOders();
+  }, []);
   return (
     <Container>
       <header>
-        <strong>Gerenciamento de Alunos</strong>
-
-        <div>
-          <input type="text" placeholder="Buscar Aluno" />
-        </div>
+        <strong>Gerenciamento de Auxílios</strong>
       </header>
 
-      <footer>
+      <Footer>
         <InfoTable>
           <thead>
             <tr>
               <th>ALUNO</th>
-              <th className="options">OPTIONS</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>student.name</td>
-              <td className="options">
-                <div>
-                  <button type="button">
-                    <MdQuestionAnswer size={22} color="#4D85EE" />
-                    <strong>RESPONDER</strong>
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {helpOders.map(helpoder => (
+              <tr>
+                <td>{helpoder.student.name || 'Deletado'}</td>
+                <td className="options">
+                  <div>
+                    <button type="button">
+                      <MdQuestionAnswer size={22} color="#4D85EE" />
+                      <strong>RESPONDER</strong>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </InfoTable>
-      </footer>
+      </Footer>
     </Container>
   );
 }

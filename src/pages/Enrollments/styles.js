@@ -56,12 +56,13 @@ export const Container = styled.div`
       }
     }
   }
+`;
 
-  footer {
-    margin-top: 10px
-    display: flex;
-    width: 100%;
-    align-items: center;
-    overflow: scroll;
-  }
+export const Footer = styled.footer`
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  height: 100ch;
+  align-items: flex-start;
+  overflow: scroll;
 `;

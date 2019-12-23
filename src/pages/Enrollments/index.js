@@ -1,15 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
+import { toast } from 'react-toastify';
 
 import { MdDelete, MdCheckCircle, MdNotInterested } from 'react-icons/md';
 
-import { Container } from './styles';
+import { Container, Footer } from './styles';
 
 import RegisterEnrollment from './RegisterEnrollment';
 
 import InfoTable from '~/components/InfoTable';
 
+import api from '~/services/api';
+import history from '~/services/history';
+
 export default function Enrollments() {
-  const iconTrue = true;
+  const [enrollments, setEnrollments] = useState([]);
+
+  const handleDelete = id => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Realmente deseja exluir essa matrícula?')) {
+      api
+        .delete(`enrollment/${id}`)
+        .then(() => {
+          history.go('enrollments');
+        })
+        .catch(() => {
+          toast.error('Erro ao deletar matrícula');
+        });
+    }
+  };
+
+  useEffect(() => {
+    async function loadingEnrollments() {
+      const response = await api.get('enrollments');
+
+      const data = response.data.map(enrollment => ({
+        ...enrollment,
+        startDateFormatted: format(
+          parseISO(enrollment.start_date),
+          "d 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+        endDateFormatted: format(
+          parseISO(enrollment.end_date),
+          "d 'de' MMMM 'de' yyyy",
+          { locale: pt }
+        ),
+      }));
+
+      setEnrollments(data);
+    }
+
+    loadingEnrollments();
+  }, []);
+
   return (
     <Container>
       <header>
@@ -20,7 +67,7 @@ export default function Enrollments() {
         </div>
       </header>
 
-      <footer>
+      <Footer>
         <InfoTable>
           <thead>
             <tr>
@@ -29,33 +76,39 @@ export default function Enrollments() {
               <th>PLANO</th>
               <th>INÍCIO</th>
               <th>TÉMINO</th>
-              <th>OPTIONS</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="checkActivity">
-                {iconTrue ? (
-                  <MdCheckCircle size={27} color="#94C160" />
-                ) : (
-                  <MdNotInterested size={27} color="#DE3B3B" />
-                )}
-              </td>
-              <td>student.name</td>
-              <td>student.email</td>
-              <td>student.ageCalc</td>
-              <td>student.ageCalc</td>
-              <td>
-                <div>
-                  <button type="button">
-                    <MdDelete size={22} color="#DE3B3B" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {enrollments.map(enrollment => (
+              <tr key={String(enrollment.id)}>
+                <td className="checkActivity">
+                  {enrollment.active && enrollment.Student ? (
+                    <MdCheckCircle size={27} color="#94C160" />
+                  ) : (
+                    <MdNotInterested size={27} color="#DE3B3B" />
+                  )}
+                </td>
+                <td>
+                  {enrollment.Student ? enrollment.Student.name : 'Deletado'}
+                </td>
+                <td>{enrollment.Plan ? enrollment.Plan.title : 'Deletado'}</td>
+                <td>{enrollment.startDateFormatted}</td>
+                <td>{enrollment.endDateFormatted}</td>
+                <td>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(enrollment.id)}
+                    >
+                      <MdDelete size={22} color="#DE3B3B" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </InfoTable>
-      </footer>
+      </Footer>
     </Container>
   );
 }

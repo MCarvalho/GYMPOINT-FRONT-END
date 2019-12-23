@@ -110,6 +110,31 @@ export const Content = styled.div`
         }
       }
 
+      select {
+        border: 0;
+        height: 45px;
+        color: #ee4d63;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 0 15px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.6);
+
+        &::placeholder {
+          color: rgba(238, 77, 99, 0.7);
+        }
+
+        &:focus {
+          border: 1px solid #eee;
+        }
+
+        &:hover {
+          background: ${darken(0.1, '#fff')};
+          transform: translateY(-1px);
+          transition: all 0.11s;
+        }
+      }
+
       input {
         border: 0;
         height: 45px;
@@ -138,6 +163,7 @@ export const Content = styled.div`
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
+        align-items: center;
 
         div {
           strong {
