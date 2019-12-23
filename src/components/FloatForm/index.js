@@ -13,7 +13,7 @@ export const FloatForm = styled.div`
           left: 0;
           z-index: 10;
           width: 100%;
-          height: 100ch;
+          height: 100%;
           background: rgba(0, 0, 0, 0.6);
         `
       : css`
