@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import logo from '../../assets/images/logo-extend.svg';
 
@@ -11,10 +11,10 @@ export default function Header() {
       <Content>
         <nav>
           <img src={logo} alt="logo" />
-          <Link to="/students">ALUNOS</Link>
-          <Link to="/plans">PLANOS</Link>
-          <Link to="/enrollments">MATRÍCULAS</Link>
-          <Link to="/helpoders">PEDIDOS DE AUXÍLIO</Link>
+          <NavLink to="/students">ALUNOS</NavLink>
+          <NavLink to="/plans">PLANOS</NavLink>
+          <NavLink to="/enrollments">MATRÍCULAS</NavLink>
+          <NavLink to="/helpoders">PEDIDOS DE AUXÍLIO</NavLink>
         </nav>
 
         <div>

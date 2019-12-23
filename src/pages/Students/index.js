@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { parseISO, formatDistanceStrict } from 'date-fns';
 import pt from 'date-fns/locale/pt';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdDelete } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import { Container } from './styles';
 
 import RegisterStudent from './RegisterStudent';
+import EditStudent from './EditStudent';
+
 import InfoTable from '~/components/InfoTable';
 import api from '~/services/api';
 import history from '~/services/history';
@@ -69,37 +71,38 @@ export default function Students() {
         </div>
       </header>
 
-      <InfoTable>
-        <thead>
-          <tr>
-            <th>NOME</th>
-            <th>EMAIL</th>
-            <th>IDADE</th>
-          </tr>
-        </thead>
-        <tbody>
-          {students.map(student => (
-            <tr key={String(student.id)}>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.ageCalc}</td>
-              <td>
-                <div>
-                  <button className="edit" type="button">
-                    <MdEdit size={22} color="#4D85EE" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleDelete(student.id)}
-                  >
-                    <MdDelete size={22} color="#DE3B3B" />
-                  </button>
-                </div>
-              </td>
+      <footer>
+        <InfoTable>
+          <thead>
+            <tr>
+              <th>NOME</th>
+              <th>EMAIL</th>
+              <th>IDADE</th>
+              <th>OPTIONS</th>
             </tr>
-          ))}
-        </tbody>
-      </InfoTable>
+          </thead>
+          <tbody>
+            {students.map(student => (
+              <tr key={String(student.id)}>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.ageCalc}</td>
+                <td>
+                  <div>
+                    <EditStudent data={student} />
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(student.id)}
+                    >
+                      <MdDelete size={22} color="#DE3B3B" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </InfoTable>
+      </footer>
     </Container>
   );
 }

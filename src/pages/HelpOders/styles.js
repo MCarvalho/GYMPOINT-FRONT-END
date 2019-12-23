@@ -3,7 +3,6 @@ import { darken } from 'polished';
 
 export const Container = styled.div`
   display: flex;
-  overflow: scroll;
   flex-direction: column;
   align-self: center;
   align-items: center;

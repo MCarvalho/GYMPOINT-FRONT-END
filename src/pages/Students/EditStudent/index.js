@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import * as Yup from 'yup';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 
+import { MdArrowBack, MdSave, MdEdit } from 'react-icons/md';
+
 import { Form, Input } from '@rocketseat/unform';
-import { MdPersonAdd, MdArrowBack, MdSave } from 'react-icons/md';
 
 import api from '~/services/api';
 import history from '~/services/history';
 
-import { Container, ButtonRegister } from './styles';
-
 import { FloatForm, Content } from '~/components/FloatForm';
+
+import { Container, EditButton } from './styles';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('É necessário o nome do aluno'),
@@ -22,12 +24,12 @@ const schema = Yup.object().shape({
   height: Yup.number('Digite a altura').required('Qual altura?'),
 });
 
-export default function RegisterStudent() {
+export default function EditStudent({ data }) {
   const [visible, setVisible] = useState(false);
 
   async function handleSubmit({ name, email, age, weight, height }) {
     await api
-      .post('students', {
+      .put(`students/${data.id}`, {
         name,
         email,
         age,
@@ -39,7 +41,7 @@ export default function RegisterStudent() {
         history.go('/students');
       })
       .catch(() => {
-        toast.error('Houve alguma falha no cadastro, verifique os dados');
+        toast.error('Houve alguma falha na atualização, verifique os dados');
       });
   }
 
@@ -49,15 +51,15 @@ export default function RegisterStudent() {
 
   return (
     <Container>
-      <ButtonRegister onClick={handleVisible}>
-        <MdPersonAdd size={22} />
-        CADASTRAR
-      </ButtonRegister>
+      <EditButton>
+        <MdEdit size={22} color="#4D85EE" onClick={handleVisible} />
+      </EditButton>
+
       <FloatForm visible={visible}>
         <Content visible={visible}>
-          <Form schema={schema} onSubmit={handleSubmit}>
+          <Form initialData={data} schema={schema} onSubmit={handleSubmit}>
             <header>
-              <strong>Cadastro de Aluno</strong>
+              <strong>Editar Aluno</strong>
               <div>
                 <button type="button" onClick={handleVisible}>
                   <MdArrowBack size={22} />
@@ -114,3 +116,7 @@ export default function RegisterStudent() {
     </Container>
   );
 }
+
+EditStudent.propTypes = {
+  data: PropTypes.isRequired,
+};

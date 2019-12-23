@@ -115,8 +115,23 @@ export const Content = styled.div`
         height: 45px;
         color: #ee4d63;
         font-weight: bold;
+        padding: 0 15px;
         border-radius: 4px;
         background: rgba(255, 255, 255, 0.6);
+
+        &::placeholder {
+          color: rgba(238, 77, 99, 0.7);
+        }
+
+        &:focus {
+          border: 1px solid #eee;
+        }
+
+        &:hover {
+          background: ${darken(0.1, '#fff')};
+          transform: translateY(-1px);
+          transition: all 0.11s;
+        }
       }
 
       div {
