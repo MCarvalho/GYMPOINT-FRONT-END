@@ -118,5 +118,5 @@ export default function EditStudent({ data }) {
 }
 
 EditStudent.propTypes = {
-  data: PropTypes.isRequired,
+  data: PropTypes.object.isRequired,
 };

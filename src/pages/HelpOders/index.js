@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { MdQuestionAnswer } from 'react-icons/md';
-
 import { Container, Footer } from './styles';
 
 import InfoTable from '~/components/InfoTable';
 
 import api from '~/services/api';
+
+import Answer from './Answer';
 
 export default function HelpOders() {
   const [helpOders, setHelpOders] = useState([]);
@@ -35,14 +35,11 @@ export default function HelpOders() {
           </thead>
           <tbody>
             {helpOders.map(helpoder => (
-              <tr>
+              <tr key={String(helpoder._id)}>
                 <td>{helpoder.student.name || 'Deletado'}</td>
                 <td className="options">
                   <div>
-                    <button type="button">
-                      <MdQuestionAnswer size={22} color="#4D85EE" />
-                      <strong>RESPONDER</strong>
-                    </button>
+                    <Answer data={helpoder} />
                   </div>
                 </td>
               </tr>

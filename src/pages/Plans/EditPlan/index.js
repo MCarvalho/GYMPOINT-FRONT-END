@@ -132,5 +132,5 @@ export default function EditPlan({ data }) {
 }
 
 EditPlan.propTypes = {
-  data: PropTypes.isRequired,
+  data: PropTypes.object.isRequired,
 };

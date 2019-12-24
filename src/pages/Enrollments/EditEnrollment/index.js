@@ -192,5 +192,5 @@ export default function EditEnrollment({ data }) {
 }
 
 EditEnrollment.propTypes = {
-  data: PropTypes.isRequired,
+  data: PropTypes.object.isRequired,
 };
