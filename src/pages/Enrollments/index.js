@@ -10,6 +10,7 @@ import { MdDelete, MdCheckCircle, MdNotInterested } from 'react-icons/md';
 import { Container, Footer } from './styles';
 
 import RegisterEnrollment from './RegisterEnrollment';
+import EditEnrollment from './EditEnrollment';
 
 import InfoTable from '~/components/InfoTable';
 
@@ -23,7 +24,7 @@ export default function Enrollments() {
     // eslint-disable-next-line no-alert
     if (window.confirm('Realmente deseja exluir essa matrícula?')) {
       api
-        .delete(`enrollment/${id}`)
+        .delete(`enrollments/${id}`)
         .then(() => {
           history.go('enrollments');
         })
@@ -96,6 +97,7 @@ export default function Enrollments() {
                 <td>{enrollment.endDateFormatted}</td>
                 <td>
                   <div>
+                    <EditEnrollment data={enrollment} />
                     <button
                       type="button"
                       onClick={() => handleDelete(enrollment.id)}

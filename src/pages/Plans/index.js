@@ -9,6 +9,7 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 import RegisterPlan from './RegisterPlan';
+import EditPlan from './EditPlan';
 
 import InfoTable from '~/components/InfoTable';
 
@@ -74,6 +75,7 @@ export default function Plans() {
                 <td>{plan.formatedPrice}</td>
                 <td>
                   <div>
+                    <EditPlan data={plan} />
                     <button type="button" onClick={() => handleDelete(plan.id)}>
                       <MdDelete size={22} color="#DE3B3B" />
                     </button>

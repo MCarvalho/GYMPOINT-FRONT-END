@@ -51,8 +51,8 @@ export default function EditStudent({ data }) {
 
   return (
     <Container>
-      <EditButton>
-        <MdEdit size={22} color="#4D85EE" onClick={handleVisible} />
+      <EditButton onClick={handleVisible}>
+        <MdEdit size={22} color="#4D85EE" />
       </EditButton>
 
       <FloatForm visible={visible}>
