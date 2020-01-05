@@ -36,7 +36,7 @@ export default function HelpOders() {
           <tbody>
             {helpOders.map(helpoder => (
               <tr key={String(helpoder._id)}>
-                <td>{helpoder.student.name || 'Deletado'}</td>
+                <td>{helpoder.student_name || 'Deletado'}</td>
                 <td className="options">
                   <div>
                     <Answer data={helpoder} />

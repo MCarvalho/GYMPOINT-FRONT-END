@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { addMonths, parseISO, format } from 'date-fns';
 import { MdEdit, MdArrowBack, MdSave } from 'react-icons/md';
-import { Form, Input, Select } from '@rocketseat/unform';
+import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import { FloatForm, Content } from '~/components/FloatForm';
@@ -12,7 +12,7 @@ import api from '~/services/api';
 
 import history from '~/services/history';
 
-import { Container, EditButton } from './styles';
+import { Container, EditButton, SelectDrop } from './styles';
 
 const schema = Yup.object().shape({
   start_date: Yup.date('Data incial').required('Quando inicia?'),
@@ -24,16 +24,16 @@ export default function EditEnrollment({ data }) {
   const [priceChange, setPriceChange] = useState(0);
   const [startDateChange, setStartDateChange] = useState();
   const [plans, setPlans] = useState([]);
+  const [plan_id, setPlanId] = useState(data.Plan ? data.Plan.id : null);
+
+  const handlePlanChange = plan => {
+    setPlanId(plan.value);
+    setPriceChange(Number(plan.price));
+    setduriationChange(Number(plan.duration));
+  };
 
   async function handleFormChange(e) {
     switch (e.target.id) {
-      case 'plan_id': {
-        const plan = plans.find(p => p.id === Number(e.target.value));
-        setPriceChange(Number(plan.price));
-        setduriationChange(Number(plan.duration));
-        break;
-      }
-
       case 'start_date': {
         setStartDateChange(parseISO(e.target.value));
         break;
@@ -45,13 +45,13 @@ export default function EditEnrollment({ data }) {
 
   useEffect(() => {
     async function loadingData() {
-      setduriationChange(Number(data.Plan.duration));
-      setPriceChange(Number(data.Plan.price));
+      setduriationChange(Number(data.Plan ? data.Plan.duration : null));
+      setPriceChange(Number(data.Plan ? data.Plan.price : null));
       setStartDateChange(parseISO(data.start_date));
     }
 
     loadingData();
-  }, [data.Plan.duration, data.Plan.price, data.start_date]);
+  }, [data.Plan, data.start_date]);
 
   const totalPrice = useMemo(() => formatPrice(duriationChange * priceChange), [
     priceChange,
@@ -60,7 +60,7 @@ export default function EditEnrollment({ data }) {
 
   const initialData = useMemo(
     () => ({
-      student: data.Student.name,
+      student: data.Student ? data.Student.name : 'Deletado',
       start_date: format(parseISO(data.start_date), "yyyy'-'MM'-'yy"),
     }),
     [data]
@@ -77,7 +77,7 @@ export default function EditEnrollment({ data }) {
     }
   }, [duriationChange, startDateChange]);
 
-  async function handleSubmit({ student_id, plan_id, start_date }) {
+  async function handleSubmit({ student_id, start_date }) {
     await api
       .put(`enrollments/${data.id}`, {
         student_id,
@@ -98,8 +98,8 @@ export default function EditEnrollment({ data }) {
       const response = await api.get('plans');
 
       const dataRequest = response.data.map(plan => ({
-        title: plan.title,
-        id: plan.id,
+        label: plan.title,
+        value: plan.id,
         duration: plan.duration,
         price: plan.price,
       }));
@@ -146,15 +146,15 @@ export default function EditEnrollment({ data }) {
               <strong>ALUNO</strong>
               <Input name="student" readOnly />
 
+              <strong>PLANO</strong>
+              <SelectDrop
+                name="plan_id"
+                options={plans}
+                onChange={handlePlanChange}
+                placeholder={data.Plan ? data.Plan.title : 'Deletado'}
+              />
+
               <div>
-                <div>
-                  <strong>PLANO</strong>
-                  <Select
-                    name="plan_id"
-                    options={plans}
-                    placeholder={data.Plan.title}
-                  />
-                </div>
                 <div>
                   <strong>DATA DE INÍCIO</strong>
                   <Input

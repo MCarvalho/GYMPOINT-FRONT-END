@@ -64,7 +64,7 @@ export default function Answer({ data }) {
             </header>
 
             <QuestionStudent>
-              <strong>Pergunta do aluno: {data.student.name}</strong>
+              <strong>Pergunta do aluno: {data.student_name}</strong>
               <sub>{data.question}</sub>
               <strong>Resposta:</strong>
               <Input
